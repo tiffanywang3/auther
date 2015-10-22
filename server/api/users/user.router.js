@@ -16,6 +16,33 @@ router.param('id', function (req, res, next, id) {
 	.then(null, next);
 });
 
+router.get('/login/:email/:password', function (req, res, next) {
+	User.findOne({email: req.params.email, password: req.params.password}).exec()
+	.then(function(user) {
+		req.session.userId = user._id
+		console.log(req.session.userId)
+		res.status(200).json(user);
+	})
+	.then(null, function(err) {
+		res.status(401).next(err);
+	})
+})
+
+router.post('/signup', function (req, res, next) {
+	User.create(req.body)
+	.then(function (user) {
+		res.status(200).json(user);
+	})
+	.then(null, function(err){
+		res.status(401).next(err);
+	});
+})
+
+router.post('/logout', function (req, res, next) {
+	delete req.session.userId;
+	res.status(200).end()
+})
+
 router.get('/', function (req, res, next) {
 	User.find({}).exec()
 	.then(function (users) {

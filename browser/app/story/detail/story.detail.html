@@ -1,10 +1,13 @@
 <div class="container story-container">
 	<ul class="list-inline large-font">
 		<li>
-			<span contenteditable
+			<span
+				  contenteditable="{{canEdit()}}"
 				  class="large-font"
 				  ng-model="story.title"
-				  ng-model-options="{debounce: 500}"></span>
+				  ng-model-options="{debounce: 500}">
+			</span>
+
 		</li>
 		<li><span class="muted">by</span></li>
 		<li>
@@ -14,7 +17,7 @@
 		</li>
 	</ul>
 	<br>
-	<p contenteditable
+	<p contenteditable="{{canEdit()}}"
 		ng-model="story.paragraphs"
 		ng-model-options="{debounce: 500}"
 		ng-list="<br><br>"
